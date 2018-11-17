@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Website Contact Form</title>
+	<script>
+		function _(id){return document.getElementById(id);}
+		function submit_form(){
+			_("my_btn").disabled = true;
+			_("status").innerHTML = "Please wait...";
+			var formdata = new FormData();
+			formdata.append("n",_("n").value);
+			formdata.append("e",_("e").value);
+			formdata.append("m",_("m").value);
+			var ajax = new XMLHttpRequest();
+			ajax.open("POST","example.php");
+			ajax.onreadystatechange = function(){
+				if(ajax.readyState == 4 && ajax.status == 200){
+					if(ajax.responseText == "success"){
+					_("my_form").innerHTML = '<h2>Thanks '+ _("n").value+' , your message has been sent</h2>';
+					}else{
+						_("status").innerHTML = ajax.responseText;
+						_("my_btn").disabled = false;
+					}
+				}
+			}
+			ajax.send(formdata);
+		}
+	</script>
+</head>
+
+<body>
+	<form id="my_form" onSubmit="submit_form(); return false;">
+		<p><input id="n" type="text" placeholder="Name" required></p>
+		<p><input id="e" type="email" placeholder="Email" required></p>
+		<textarea id="m" placeholder="write your message here" rows="10" required></textarea>
+		<p><input id="my_btn" type="submit" value="Submit Form"><span id="status"></span></p>
+	</form>
+</body>
+</html>

@@ -1,0 +1,1 @@
+<img src="example.php?source=seminar.jpg">
